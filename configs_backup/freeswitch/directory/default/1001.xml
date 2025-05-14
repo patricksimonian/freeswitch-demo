@@ -1,0 +1,13 @@
+<include>
+  <user id="1001">
+    <params>
+      <param name="password" value="zjUAcySQTggV"/>
+    </params>
+    <variables>
+      <variable name="toll_allow" value="domestic,international,local"/>
+      <variable name="user_context" value="public"/>
+      <variable name="directory-visible" value="true"/>
+      <variable name="directory-exten-visible" value="true"/>
+    </variables>
+  </user>
+</include>

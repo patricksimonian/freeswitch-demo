@@ -1,0 +1,127 @@
+# version: '3.8'
+# services:
+#   freeswitch:
+#     container_name: freeswitch
+#     image: safarov/freeswitch
+# #this declaration is unnecessary in host-mode networking
+# #but is left to serve as a reminder for which ports to forward 
+# #in case you are hosting your instance behind NAT
+#     ports:
+#       - "5060:5060/udp"
+#       - "5080:5080/udp"
+#       - "64000-64100:64000-64100/udp"
+#       - "5066:5066/tcp"
+#       - "9443:7443"
+#     networks:
+#       - voip
+
+#     environment:
+#       SOUND_RATES: "32000:48000"
+#       SOUND_TYPES: "en-us-allison"
+#       EPMD: "false"
+#       DUMPCAP: "false"
+#     volumes:
+#       - './configs/freeswitch:/etc/freeswitch'
+#       - './configs/freeswitch-sounds:/usr/share/freeswitch/sounds'
+#       - './configs/freeswitch-logs/freeswitch.log:/var/log/freeswitch/freeswitch.log'
+#   # fail2ban:
+#   #   container_name: fail2ban
+#   #   image: crazymax/fail2ban:latest
+#   #   network_mode: "host"
+#   #   cap_add:
+#   #     - NET_ADMIN
+#   #     - NET_RAW
+#   #   volumes:
+#   #     - "./configs/fail2ban/data:/data"
+#   #     - "./configs/freeswitch-logs/freeswitch.log:/var/log/freeswitch/freeswitch.log:ro"
+#   #   env_file:
+#   #     - "./configs/fail2ban/fail2ban.env"
+#   #   restart: always
+#   sngrep:
+#     image: debian:bullseye
+#     container_name: sngrep
+#     network_mode: host
+#     tty: true
+#     stdin_open: true
+#     entrypoint: ["bash", "-c", "apt update && apt install -y sngrep && sngrep"]
+#   # oreka:
+#     # image: voiceip/orkaudio:latest
+#     # container_name: oreka
+#     # privileged: true
+#     # restart: always
+#     # volumes:
+#     #   - ./oreka/config:/etc/orkaudio
+#     #   - ./oreka/logs:/var/log/orkaudio
+#     # ports:
+#     #   - "5065:5065" # SIPREC interface
+#     #   - "8080:8080" # Web interface
+#     #   - "9000:9000" # WebSocket live stream
+#     # environment:
+#     #   - OREKA_MODE=server
+#     # networks:
+#     #   - voip
+#     # depends_on:
+#     #   - freeswitch
+
+#   # websocket-streamer:
+#     # build: ./streamer
+#     # container_name: streamer
+#     # environment:
+#     #   - GOOGLE_APPLICATION_CREDENTIALS=/creds/gcp-creds.json
+#     # volumes:
+#     #   - ./creds:/creds
+#     # networks:
+#     #   - voip
+#     # depends_on:
+#     #   - oreka
+
+# networks:
+#   voip:
+#     driver: bridge
+version: "3.2"
+networks:
+  voip:
+    driver: bridge
+services:
+  sngrep:
+    image: debian:bullseye
+    container_name: sngrep
+    network_mode: host
+    tty: true
+    stdin_open: true
+    entrypoint: ["bash", "-c", "apt update && apt install -y sngrep && sngrep"]
+  freeswitch:
+    container_name: freeswitch
+    image: safarov/freeswitch
+    ports:
+      - "5060:5060/udp"
+      - "5080:5080/udp"
+      - "64000-64100:64000-64100/udp"
+      - "5066:5066/tcp"
+      - "9443:7443"
+    # network_mode: "host"
+    networks:
+      - voip
+    
+    environment:
+      SOUND_RATES: "32000:48000"
+      SOUND_TYPES: "en-us-allison"
+      EPMD: "false"
+      DUMPCAP: "false"
+    volumes:
+      - './configs/freeswitch:/etc/freeswitch'
+      - './configs/freeswitch-sounds:/usr/share/freeswitch/sounds'
+      - './configs/freeswitch-logs/freeswitch.log:/var/log/freeswitch/freeswitch.log'
+  # fail2ban:
+  #   container_name: fail2ban
+  #   image: crazymax/fail2ban:latest
+  #   network_mode: "host"
+  #   cap_add:
+  #     - NET_ADMIN
+  #     - NET_RAW
+  #   volumes:
+  #     - "./configs/fail2ban/data:/data"
+  #     - "./configs/freeswitch-logs/freeswitch.log:/var/log/freeswitch/freeswitch.log:ro"
+  #   env_file:
+  #     - "./configs/fail2ban/fail2ban.env"
+  #   restart: always

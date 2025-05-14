@@ -1,0 +1,19 @@
+sipsak -U -s sip:1000@127.0.0.1 -a 1234
+
+docker exec -it freeswitch fs_cli -H 127.0.0.1 -P 8021 -p FS_UNUSED_0000 -x 'reloadxml'
+docker exec -it freeswitch fs_cli -H 127.0.0.1 -P 8021 -p FS_UNUSED_0000 -x 'sofia profile internal restart'
+docker exec -it freeswitch fs_cli -H 127.0.0.1 -P 8021 -p FS_UNUSED_0000 -x 'reload mod_sofia'
+docker exec -it freeswitch fs_cli -H 127.0.0.1 -P 8021 -p FS_UNUSED_0000 -x 'sofia status profile internal reg'
+docker exec -it freeswitch fs_cli -H 127.0.0.1 -P 8021 -p FS_UNUSED_0000 -x 'sofia status'
+docker exec -it freeswitch fs_cli -H 127.0.0.1 -P 8021 -p FS_UNUSED_0000 -x 'sofia loglevel all 9'
+docker exec -it freeswitch fs_cli -H 127.0.0.1 -P 8021 -p FS_UNUSED_0000 -x 'eval $${domain}'
+docker exec -it freeswitch fs_cli -H 127.0.0.1 -P 8021 -p FS_UNUSED_0000 -x 'eval $${local_ip_v4}'
+docker exec -it freeswitch fs_cli -H 127.0.0.1 -P 8021 -p FS_UNUSED_0000 -x 'sofia global siptrace on'
+docker exec -it freeswitch netstat -anu 
+## Debug Networking
+
+Check if ports and host on freeswithc container
+docker exec -it freeswitch netstat -anu 
+
+## SN GREP
+docker attach sngrep

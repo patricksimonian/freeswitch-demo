@@ -1,0 +1,48 @@
+# freeswitch/sip_profiles/internal.xml (minimal working version)
+
+<profile name="internal">
+  <domains>
+    <domain name="all" alias="true" parse="false"/>
+    <!-- <domain name="127.0.0.1" alias="true" parse="true"/> -->
+
+  </domains>
+
+  <settings>
+    <param name="debug" value="0"/>
+    <param name="sip-trace" value="no"/>
+    <param name="sip-capture" value="no"/>
+
+    <param name="context" value="public"/>
+    <param name="sip-port" value="5060"/>
+    <param name="dialplan" value="XML"/>
+    <param name="dtmf-duration" value="2000"/>
+    <param name="inbound-codec-prefs" value="PCMU,PCMA"/>
+    <param name="outbound-codec-prefs" value="PCMU,PCMA"/>
+
+    <param name="rtp-timer-name" value="soft"/>
+    <param name="hold-music" value="$${hold_music}"/>
+
+    <!-- Bind to all interfaces -->
+    <param name="sip-ip" value="127.0.0.1"/>
+    <param name="rtp-ip" value="127.0.0.1"/>
+
+    <param name="ext-sip-ip" value="127.0.0.1"/>
+    <param name="ext-rtp-ip" value="127.0.0.1"/>
+    <param name="ext-rtp-ip-autonat" value="false"/>
+    <param name="ext-sip-ip-autonat" value="false"/>
+
+    <!-- Disable NAT autodetection overrides -->
+    <!-- <param name="apply-inbound-acl" value="none"/>
+     -->
+    <param name="apply-inbound-acl" value="domains"/>
+    <param name="local-network-acl" value="localnet.auto"/>
+    <param name="NDLB-force-rport" value="true"/>
+
+    <!-- Registration/call support -->
+    <param name="auth-calls" value="true"/>
+    <param name="inbound-reg-force-matching-username" value="true"/>
+    <param name="manage-presence" value="true"/>
+    <param name="record-path" value="$${recordings_dir}"/>
+    <param name="record-template" value="${caller_id_number}.${target_domain}.${strftime(%Y-%m-%d-%H-%M-%S)}.wav"/>
+  </settings>
+</profile>
