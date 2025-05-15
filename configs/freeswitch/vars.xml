@@ -62,8 +62,7 @@
  
 
 -->
-  <X-PRE-PROCESS cmd="set" data="domain=127.0.0.1"/>
-  <X-PRE-PROCESS cmd="set" data="domain_name=127.0.0.1"/>
+
 
   <X-PRE-PROCESS cmd="set" data="hold_music=local_stream://moh"/>
   <X-PRE-PROCESS cmd="set" data="use_profile=external"/>
@@ -284,13 +283,15 @@
        use different addresses where this variable appears.
        Used by: dingaling.conf.xml
   -->
-  
+  <X-PRE-PROCESS cmd="set" data="bind_server_ip=auto"/>
 
   <!-- NOTICE NOTICE NOTICE NOTICE NOTICE NOTICE NOTICE NOTICE NOTICE NOTICE NOTICE
 
        If you're going to load test FreeSWITCH please input real IP addresses
        for external_rtp_ip and external_sip_ip
   -->
+    <!-- <X-PRE-PROCESS cmd="set" data="external_rtp_ip=127.0.0.1"/>
+    <X-PRE-PROCESS cmd="set" data="external_sip_ip=127.0.0.1"/> -->
 
   <!-- external_rtp_ip
        Can be an one of:
@@ -302,7 +303,7 @@
        If unspecified, the bind_server_ip value is used.
        Used by: sofia.conf.xml dingaling.conf.xml
   -->
-  <X-PRE-PROCESS cmd="stun-set" data="external_rtp_ip=stun:stun.freeswitch.org"/>
+  <!-- <X-PRE-PROCESS cmd="stun-set" data="external_rtp_ip=stun:stun.freeswitch.org"/> -->
 
   <!-- external_sip_ip
       Used as the public IP address for SDP.
@@ -315,9 +316,9 @@
        If unspecified, the bind_server_ip value is used.
        Used by: sofia.conf.xml dingaling.conf.xml
   -->
-  <X-PRE-PROCESS cmd="stun-set" data="external_sip_ip=stun:stun.freeswitch.org"/>
+  <!-- <X-PRE-PROCESS cmd="stun-set" data="external_sip_ip=stun:stun.freeswitch.org"/> -->
   <X-PRE-PROCESS cmd="set" data="add_ice_candidates=true"/>
-  <X-PRE-PROCESS cmd="set" data="local_ip_v4=127.0.0.1"/>
+  <X-PRE-PROCESS cmd="set" data="local_ip_v4=192.168.1.175"/>
 
 
   <!-- unroll-loops
@@ -412,8 +413,6 @@
      default: tlsv1,tlsv1.1,tlsv1.2
   -->
   <X-PRE-PROCESS cmd="set" data="sip_tls_version=tlsv1,tlsv1.1,tlsv1.2"/>
-  <X-PRE-PROCESS cmd="set" data="bind_server_ip=0.0.0.0"/>
-  <X-PRE-PROCESS cmd="set" data="internal_sip_port=5060"/>
 
   <!--
      TLS cipher suite: default ALL:!ADH:!LOW:!EXP:!MD5:@STRENGTH
@@ -453,5 +452,8 @@
   <!-- Stock Video Avatars -->
   <X-PRE-PROCESS cmd="set" data="video_mute_png=$${images_dir}/default-mute.png"/>
   <X-PRE-PROCESS cmd="set" data="video_no_avatar_png=$${images_dir}/default-avatar.png"/>
-
+    <X-PRE-PROCESS cmd="set" data="external_sip_ip=192.168.1.175"/>
+    <X-PRE-PROCESS cmd="set" data="external_rtp_ip=192.168.1.175"/>
+    <X-PRE-PROCESS cmd="set" data="domain=192.168.1.175"/>
+    <X-PRE-PROCESS cmd="set" data="domain_name=192.168.1.175"/>
 </include>

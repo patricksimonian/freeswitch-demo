@@ -3,6 +3,6 @@
     <param name="password" value="1234"/>
   </params>
   <variables>
-    <variable name="user_context" value="public"/>
+    <variable name="user_context" value="default"/>
   </variables>
 </user>

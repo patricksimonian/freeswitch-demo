@@ -8,12 +8,19 @@ docker exec -it freeswitch fs_cli -H 127.0.0.1 -P 8021 -p FS_UNUSED_0000 -x 'sof
 docker exec -it freeswitch fs_cli -H 127.0.0.1 -P 8021 -p FS_UNUSED_0000 -x 'sofia loglevel all 9'
 docker exec -it freeswitch fs_cli -H 127.0.0.1 -P 8021 -p FS_UNUSED_0000 -x 'eval $${domain}'
 docker exec -it freeswitch fs_cli -H 127.0.0.1 -P 8021 -p FS_UNUSED_0000 -x 'eval $${local_ip_v4}'
+docker exec -it freeswitch fs_cli -H 127.0.0.1 -P 8021 -p FS_UNUSED_0000 -x 'eval $${external_rtp_ip}'
+docker exec -it freeswitch fs_cli -H 127.0.0.1 -P 8021 -p FS_UNUSED_0000 -x 'sofia status profile internal'
+
+
+
 docker exec -it freeswitch fs_cli -H 127.0.0.1 -P 8021 -p FS_UNUSED_0000 -x 'sofia global siptrace on'
+docker exec -it freeswitch fs_cli -H 127.0.0.1 -P 8021 -p FS_UNUSED_0000 -x 'console loglevel debug'
 docker exec -it freeswitch netstat -anu 
 ## Debug Networking
 
 Check if ports and host on freeswithc container
 docker exec -it freeswitch netstat -anu 
 
+docker inspect -f "{{ .NetworkSettings.Networks.nat.IPAddress }}" freeswitch
 ## SN GREP
 docker attach sngrep

@@ -1,7 +1,7 @@
 <profile name="internal">
   <domains>
     <!-- Use actual IP domain used for registration requests -->
-    <domain name="$${domain}" alias="true" parse="true"/>
+    <domain name="192.168.0.175" alias="true" parse="true"/>
   </domains>
 
   <settings>
@@ -20,15 +20,15 @@
     <param name="hold-music" value="$${hold_music}"/>
 
     <!-- Bind to loopback for local testing -->
-    <param name="sip-ip" value="127.0.0.1"/>
+    <param name="sip-ip" value="auto"/>
 
 
-    <param name="rtp-ip" value="127.0.0.1"/>
-    <param name="ext-sip-ip" value="auto"/>
-    <param name="ext-rtp-ip" value="auto"/>
+    <param name="rtp-ip" value="auto"/>
+    <param name="ext-sip-ip" value="$${external_sip_ip}"/>
+    <param name="ext-rtp-ip" value="$${external_rtp_ip}"/>
     <param name="ext-rtp-ip-autonat" value="false"/>
     <param name="ext-sip-ip-autonat" value="false"/>
-
+    <param name="enable-nat" value="true"/>
     <!-- Disable NAT autodetection overrides -->
     <param name="apply-inbound-acl" value="none"/>
     <param name="local-network-acl" value="localnet.auto"/>
