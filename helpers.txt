@@ -17,6 +17,8 @@ docker exec -it freeswitch fs_cli -H 127.0.0.1 -P 8021 -p FS_UNUSED_0000 -x 'sof
 docker exec -it freeswitch fs_cli -H 127.0.0.1 -P 8021 -p FS_UNUSED_0000 -x 'console loglevel debug'
 docker exec -it freeswitch netstat -anu 
 ## Debug Networking
+docker exec -it freeswitch tcpdump -i any udp portrange 10000-20000
+
 
 Check if ports and host on freeswithc container
 docker exec -it freeswitch netstat -anu 
@@ -24,3 +26,8 @@ docker exec -it freeswitch netstat -anu
 docker inspect -f "{{ .NetworkSettings.Networks.nat.IPAddress }}" freeswitch
 ## SN GREP
 docker attach sngrep
+   
+
+
+## Notes to get freeswitch working on a LAN
+## you must enable nat so that the docker network can route RTP traffic do the LAN. if not the RTP traffic is always directed to a 172.19.x.x host which is not routable. 
